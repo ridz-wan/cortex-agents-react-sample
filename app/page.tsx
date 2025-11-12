@@ -1,6 +1,6 @@
 "use client"
 
-import { AgentApiState, AgentRequestBuildParams, CORTEX_ANALYST_TOOL, CORTEX_SEARCH_TOOL, DATA_TO_CHART_TOOL, SQL_EXEC_TOOL, useAgentAPIQuery } from "@/lib/agent-api";
+import { AgentApiState, useAgentAPIQuery } from "@/lib/agent-api";
 import { useAccessToken } from "@/lib/auth";
 import { Messages } from "./components/messages";
 import { ChatInput } from "./components/input";
@@ -11,24 +11,12 @@ export default function Home() {
   // but this can be easily replaced with a login layer and session management
   const { token: jwtToken } = useAccessToken();
 
-  const tools: AgentRequestBuildParams['tools'] = [
-    CORTEX_SEARCH_TOOL,
-    CORTEX_ANALYST_TOOL,
-    DATA_TO_CHART_TOOL,
-    SQL_EXEC_TOOL,
-  ]
-
-  const { agentState, messages, latestAssistantMessageId, handleNewMessage } = useAgentAPIQuery({
+  const { agentState, messages, statusMessage, streamBuffers, handleNewMessage } = useAgentAPIQuery({
     authToken: jwtToken,
     snowflakeUrl: process.env.NEXT_PUBLIC_SNOWFLAKE_URL!,
-    experimental: {
-      EnableRelatedQueries: true,
-    },
-    tools,
-    toolResources: {
-      "analyst1": { "semantic_model_file": process.env.NEXT_PUBLIC_SEMANTIC_MODEL_PATH },
-      "search1": { "name": process.env.NEXT_PUBLIC_SEARCH_SERVICE_PATH, max_results: 10 }
-    }
+    cortexDatabase: process.env.NEXT_PUBLIC_CORTEX_DATABASE!,
+    cortexSchema: process.env.NEXT_PUBLIC_CORTEX_SCHEMA!,
+    cortexAgent: process.env.NEXT_PUBLIC_CORTEX_AGENT!,
   })
 
   return (
@@ -39,7 +27,8 @@ export default function Home() {
         <Messages
           agentState={agentState}
           messages={messages}
-          latestAssistantMessageId={latestAssistantMessageId}
+          statusMessage={statusMessage}
+          streamBuffers={streamBuffers}
         />
 
         <form className="flex mx-auto px-4 bg-background pb-4 md:pb-6 gap-2 w-full md:max-w-3xl">

@@ -2,7 +2,11 @@ import { motion } from 'framer-motion';
 import { SparklesIcon } from './icons';
 import { cx } from 'class-variance-authority';
 
-export const ThinkingMessage = () => {
+interface ThinkingMessageProps {
+    statusMessage: string;
+}
+
+export const ThinkingMessage = ({ statusMessage }: ThinkingMessageProps) => {
     return (
         <motion.div
             className="w-full mx-auto max-w-3xl px-4 group/message "
@@ -23,7 +27,7 @@ export const ThinkingMessage = () => {
 
                 <div className="flex flex-col gap-2 w-full">
                     <div className="flex flex-col gap-4 text-muted-foreground text-md">
-                        Thinking...
+                        {statusMessage}
                     </div>
                 </div>
             </div>

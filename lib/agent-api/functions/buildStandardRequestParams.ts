@@ -5,9 +5,6 @@ export interface AgentRequestBuildParams {
     authToken: string;
     messages: AgentMessage[];
     input?: string;
-    experimental?: Record<string, unknown>;
-    tools?: (Record<string, unknown>)[];
-    toolResources?: Record<string, unknown>;
 }
 
 /**
@@ -18,9 +15,6 @@ export function buildStandardRequestParams(params: AgentRequestBuildParams) {
     const {
         authToken,
         messages,
-        experimental,
-        tools,
-        toolResources,
     } = params;
 
     const headers = {
@@ -32,10 +26,7 @@ export function buildStandardRequestParams(params: AgentRequestBuildParams) {
 
     const body = {
         "model": "claude-4-sonnet",
-        "experimental": experimental,
         "messages": messages,
-        "tools": tools,
-        "tool_resources": toolResources,
     }
 
     return { headers, body };

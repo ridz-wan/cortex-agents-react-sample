@@ -48,10 +48,14 @@ export interface AgentMessageFetchedTableContent {
 
 
 export interface AgentMessage {
-    id: string;
+    id?: string;
     role: AgentMessageRole;
     content: (AgentMessageTextContent | AgentMessageToolUseContent | AgentMessageToolResultsContent | AgentMessageChartContent | AgentMessageTableContent | AgentMessageFetchedTableContent)[];
 }
+
+export interface StreamBuffer {
+    [key: number]: string;
+  }
 
 export interface CortexAnalystTool {
     "tool_spec": {
@@ -126,3 +130,27 @@ export interface RelatedQuery {
     relatedQuery: string;
     answer: string;
 }
+
+export interface StatusEventData {
+    message: string;
+  }
+  
+  export interface TextDeltaEventData {
+    content_index: number;
+    text: string;
+  }
+  
+  export interface ThinkingDeltaEventData {
+    content_index: number;
+    text: string;
+  }
+  
+  export interface ThinkingEventData {
+    content_index: number;
+    text: string;
+  }
+  
+  export interface ErrorEventData {
+    code: string;
+    message: string;
+  }
