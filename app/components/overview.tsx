@@ -15,7 +15,10 @@ export const Overview = () => {
                 <p className="flex flex-row justify-center gap-4 items-center">
                     <MessageIcon size={32} />
                 </p>
-                <h1 className="text-[28px] font-bold">What can I help with?</h1>
+                <h1 className="text-[28px] font-bold">
+                    Dear the most valuable Shippit customer,<br />
+                    How can I help you today?
+                </h1>
             </div>
         </motion.div>
     );

@@ -12,6 +12,13 @@ export interface AgentMessageTextContent {
     text: string,
 }
 
+export interface AgentMessageThinkingContent {
+    type: string,
+    thinking: {
+      text: string;
+    };
+  }
+
 export interface AgentMessageToolUseContent {
     type: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,7 +57,7 @@ export interface AgentMessageFetchedTableContent {
 export interface AgentMessage {
     id?: string;
     role: AgentMessageRole;
-    content: (AgentMessageTextContent | AgentMessageToolUseContent | AgentMessageToolResultsContent | AgentMessageChartContent | AgentMessageTableContent | AgentMessageFetchedTableContent)[];
+    content: (AgentMessageTextContent | AgentMessageThinkingContent | AgentMessageToolUseContent | AgentMessageToolResultsContent | AgentMessageChartContent | AgentMessageTableContent | AgentMessageFetchedTableContent)[];
 }
 
 export interface StreamBuffer {

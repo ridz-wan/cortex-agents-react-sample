@@ -48,12 +48,11 @@ export function useAgentAPIQuery(params: AgentApiQueryParams) {
   // Print streamBuffers whenever it changes
   React.useEffect(() => {
     // console.log("streamBuffers:", streamBuffers);
-    // console.log("streamBuffers (JSON):", JSON.stringify(streamBuffers, null, 2));
-    console.log(messages);
-  }, [messages]);
+    // console.log("messages:", messages);
+  }, [streamBuffers, messages]);
 
   const resetStreamState = React.useCallback(() => {
-    // setStreamBuffers({});
+    setStreamBuffers({});
   }, []);
 
   const handleEvent = React.useCallback(
@@ -111,7 +110,7 @@ export function useAgentAPIQuery(params: AgentApiQueryParams) {
         console.error("Error handling event:", error);
       }
     },
-    [streamBuffers]
+    []
   );
 
   const handleNewMessage = React.useCallback(
@@ -149,9 +148,9 @@ export function useAgentAPIQuery(params: AgentApiQueryParams) {
         // console.log(event);
         handleEvent(event.event || "", event.data || "");
       }
-      // setAgentState(AgentApiState.IDLE);
-      // setStatusMessage('');
-      // resetStreamState();
+      setAgentState(AgentApiState.IDLE);
+      setStatusMessage('');
+      resetStreamState();
     },
     [authToken, messages, handleEvent, resetStreamState]
   );

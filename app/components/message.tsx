@@ -2,14 +2,12 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { memo } from 'react';
-import { AgentApiState, AgentMessage, AgentMessageRole, AgentMessageChartContent, AgentMessageFetchedTableContent, AgentMessageTextContent, AgentMessageToolResultsContent, AgentMessageToolUseContent, Citation, CortexSearchCitationSource, RELATED_QUERIES_REGEX, RelatedQuery } from '@/lib/agent-api';
+import { AgentApiState, AgentMessage, AgentMessageRole, AgentMessageChartContent, AgentMessageTextContent, AgentMessageThinkingContent, Citation, RELATED_QUERIES_REGEX, RelatedQuery } from '@/lib/agent-api';
 import equal from 'fast-deep-equal';
 import { prettifyChartSpec } from '@/lib/agent-api/functions/chat/prettifyChartSpec';
 import { ChatTextComponent } from './chat-text-component';
+import { ChatThinkingComponent } from './chat-thinking-component';
 import { ChatChartComponent } from './chat-chart-component';
-import { ChatRelatedQueriesComponent } from './chat-related-queries-component';
-import { ChatCitationsComponent } from './chat-citations-component';
-import { Data2AnalyticsMessage } from './chat-data2-message';
 import { postProcessAgentText } from '../functions/postProcessAgentText';
 
 const PurePreviewMessage = ({
@@ -53,7 +51,9 @@ const PurePreviewMessage = ({
             const chart_content = (content as AgentMessageChartContent);
             const chartSpec = prettifyChartSpec(JSON.parse(chart_content.chart.chart_spec));
             agentResponses.push(<ChatChartComponent key={JSON.stringify(chartSpec)} chartSpec={chartSpec} />);
-            
+        } else if (content.type === "thinking") {
+            const { thinking } = (content as AgentMessageThinkingContent);
+            agentResponses.push(<ChatThinkingComponent key={thinking.text} text={thinking.text} role={role} />);
         }
     })
 

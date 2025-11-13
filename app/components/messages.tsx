@@ -33,12 +33,12 @@ function PureMessages({ agentState, messages, statusMessage, streamBuffers }: Me
         />
       ))}
 
-      {agentState === AgentApiState.LOADING && (
-        <ThinkingMessage statusMessage={statusMessage} />
+      {agentState !== AgentApiState.IDLE && (
+        <StreamingMessage streamBuffers={streamBuffers} />
       )}
 
-      {agentState === AgentApiState.STREAMING && (
-        <StreamingMessage streamBuffers={streamBuffers} />
+    {agentState === AgentApiState.LOADING && (
+        <ThinkingMessage statusMessage={statusMessage} />
       )}
 
       <div
@@ -53,5 +53,6 @@ export const Messages = memo(PureMessages, (prevProps, nextProps) => {
   if (prevProps.agentState !== nextProps.agentState) return false;
   if (prevProps.messages.length !== nextProps.messages.length) return false;
   if (!equal(prevProps.messages, nextProps.messages)) return false;
+  if (!equal(prevProps.streamBuffers, nextProps.streamBuffers)) return false;
   return true;
 });

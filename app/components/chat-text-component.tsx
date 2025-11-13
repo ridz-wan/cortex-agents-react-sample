@@ -12,8 +12,8 @@ export function ChatTextComponent(props: ChatTextComponentProps) {
     return (
         <div className="flex flex-row gap-2 items-start">
             <div
-                className={cn('flex flex-col gap-4', {
-                    'bg-[#f7f7f7] px-4 py-3 rounded-xl':
+                className={cn('flex flex-col bg-violet-300 px-4 py-3 rounded-xl gap-4 text-sm', {
+                    'bg-gray-300 px-4 py-3 rounded-xl':
                         role === 'user',
                 })}
             >
