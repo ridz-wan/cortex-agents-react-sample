@@ -23,25 +23,25 @@ export const StreamingMessage: React.FC<StreamingMessageProps> = ({
         animate={{ y: 0, opacity: 1 }}
         data-role={AgentMessageRole.ASSISTANT}
       >
-        <div className="flex flex-col gap-4 w-full">
-          {Object.entries(streamBuffers).map(([index, text]) => (
-            <div key={index} className="flex items-start gap-2">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mt-1">
-                <BotIcon />
+        <div className="flex items-start gap-2">
+          <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center mt-1">
+            <BotIcon />
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="flex space-x-1">
+                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce [animation-delay:-0.05s]"></div>
+                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce [animation-delay:-0.02s]"></div>
+                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
               </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce [animation-delay:-0.05s]"></div>
-                    <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce [animation-delay:-0.02s]"></div>
-                    <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                  </div>
-                  <span className="text-xs text-gray-500">Answering...</span>
-                </div>
-                <ChatTextComponent text={text} role={AgentMessageRole.ASSISTANT} />
-              </div>
+              <span className="text-xs text-gray-500">Answering...</span>
             </div>
-          ))}
+            <div className="flex flex-col gap-4">
+              {Object.entries(streamBuffers).map(([index, text]) => (
+                <ChatTextComponent key={index} text={text} role={AgentMessageRole.ASSISTANT} />
+              ))}
+            </div>
+          </div>
         </div>
       </motion.div>
     </AnimatePresence>

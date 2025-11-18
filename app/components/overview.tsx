@@ -16,7 +16,7 @@ export const Overview = () => {
                     <MessageIcon size={32} />
                 </p>
                 <h1 className="text-[28px] font-bold">
-                    Dear the most valuable Shippit customer,<br />
+                    Dear the most valuable Shippit customer, 😉<br />
                     How can I help you today?
                 </h1>
             </div>
